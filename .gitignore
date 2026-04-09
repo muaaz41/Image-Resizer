@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Google Cloud credentials and all JSON files
+*.json
+
+# Generated outputs
+outputs/
+
+# macOS system files
+.DS_Store
+
+# Node installer (not part of the project)
+*.pkg

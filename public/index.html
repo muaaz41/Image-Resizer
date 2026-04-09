@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creative Resizer</title>
+  <style>
+    /* ── Simple, clean layout ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    h1 { font-size: 1.5rem; margin-bottom: 24px; color: #111; }
+
+    label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .checkboxes { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0f0f0;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    .checkbox-item input { cursor: pointer; }
+
+    button {
+      width: 100%;
+      background: #111;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover:not(:disabled) { background: #333; }
+    button:disabled { background: #999; cursor: not-allowed; }
+
+    /* ── Download All button ── */
+    #downloadAllBtn {
+      display: none;           /* hidden until results appear */
+      margin-top: 16px;
+      background: #1a6b3a;     /* green to distinguish from main button */
+    }
+    #downloadAllBtn:hover:not(:disabled) { background: #145c30; }
+
+    /* ── Status + results ── */
+    #status {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #555;
+      min-height: 24px;
+    }
+
+    #results { margin-top: 24px; }
+
+    .result-item {
+      margin-bottom: 16px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .result-label {
+      background: #f5f5f5;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .result-item img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Per-image group heading ── */
+    .image-group {
+      margin-bottom: 32px;
+    }
+
+    .image-group-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #111;
+      background: #e8e8e8;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Creative Resizer</h1>
+
+    <!-- Three separate image upload fields -->
+    <label>Image 1</label>
+    <input type="file" id="imageInput1" accept="image/*" />
+
+    <label>Image 2 <span style="font-weight:400;color:#888;">(optional)</span></label>
+    <input type="file" id="imageInput2" accept="image/*" />
+
+    <label>Image 3 <span style="font-weight:400;color:#888;">(optional)</span></label>
+    <input type="file" id="imageInput3" accept="image/*" />
+
+    <!-- Output sizes -->
+    <label>Output Sizes</label>
+    <div class="checkboxes">
+      <label class="checkbox-item">
+        <input type="checkbox" name="ratio" value="1:1" /> 1:1 Square
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" name="ratio" value="4:5" /> 4:5 Portrait
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" name="ratio" value="9:16" /> 9:16 Story
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" name="ratio" value="16:9" /> 16:9 Landscape
+      </label>
+    </div>
+
+    <!-- Brand instructions -->
+    <label for="brandPrompt">Brand Instructions (optional)</label>
+    <textarea
+      id="brandPrompt"
+      rows="3"
+      placeholder="e.g. white minimalist background, keep the logo visible, premium look"
+    ></textarea>
+
+    <!-- Submit -->
+    <button id="submitBtn" onclick="submitForm()">Resize with AI</button>
+
+    <!-- Download All — only shown after images are generated -->
+    <button id="downloadAllBtn" onclick="downloadAll()">Download All as ZIP</button>
+
+    <!-- Status message -->
+    <div id="status"></div>
+
+    <!-- Output images appear here -->
+    <div id="results"></div>
+  </div>
+
+  <!-- JSZip: bundles multiple files into a single .zip download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- app.js handles form submission and downloads -->
+  <script src="app.js"></script>
+</body>
+</html>
