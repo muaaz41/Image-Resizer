@@ -1,0 +1,20 @@
+{
+  "name": "creative-resizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Image resizer backend using Stability AI outpainting",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.2",
+    "sharp": "^0.33.5"
+  }
+}
