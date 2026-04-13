@@ -1,13 +1,34 @@
+# Distributables
+package.tgz
+
 # Dependencies
 node_modules/
+
+# Yarn
+# https://yarnpkg.com/advanced/qa/#which-files-should-be-gitignored
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Logs
+yarn-debug.log*
+yarn-error.log
+
+# Testing
+/coverage
+
+# Cache
+/.cache
+.eslintcache
 
 # Environment variables
 .env
 
-package-lock.json
-# Generated outputs
+# Generated outputs (if you add any later)
 outputs/
 
-# macOS system files
+# macOS
 .DS_Store
-
